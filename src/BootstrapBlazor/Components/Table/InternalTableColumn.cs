@@ -94,7 +94,7 @@ namespace BootstrapBlazor.Components
         [NotNull]
         public string? Text { get; set; }
 
-        public RenderFragment<object>? EditTemplate { get; set; }
+        public RenderFragment<EditTemplateContext>? EditTemplate { get; set; }
 
         /// <summary>
         /// 获得/设置 组件类型 默认为 null

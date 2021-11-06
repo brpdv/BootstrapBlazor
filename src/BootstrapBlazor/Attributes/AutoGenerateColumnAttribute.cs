@@ -108,7 +108,7 @@ namespace BootstrapBlazor.Components
         /// <summary>
         /// 获得/设置 编辑模板
         /// </summary>
-        RenderFragment<object>? IEditorItem.EditTemplate { get; set; }
+        RenderFragment<EditTemplateContext>? IEditorItem.EditTemplate { get; set; }
 
         /// <summary>
         /// 获得/设置 表头模板

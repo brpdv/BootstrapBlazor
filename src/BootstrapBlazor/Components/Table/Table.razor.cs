@@ -968,7 +968,7 @@ namespace BootstrapBlazor.Components
         private RenderFragment RenderCell(ITableColumn col, TItem item, ItemChangedType changedType) => col.IsEditable(changedType)
             ? (col.EditTemplate == null
                 ? builder => builder.CreateComponentByFieldType(this, col, item, false, changedType)
-                : col.EditTemplate(new EditTemplateContext<TItem>(item, changedType)))
+                : col.EditTemplate(new EditTemplateContext(item, changedType)))
             : (col.Template == null
                 ? builder => builder.CreateDisplayByFieldType(this, col, item, false)
                 : col.Template(item));
@@ -993,17 +993,19 @@ namespace BootstrapBlazor.Components
 
             void SetDynamicEditTemplate()
             {
-                col.EditTemplate = row => builder =>
+                col.EditTemplate = context => builder =>
                 {
-                    var d = (IDynamicObject)row;
-                    var onValueChanged = Utility.CreateOnValueChanged<IDynamicObject>(col.PropertyType).Compile();
-                    if (DynamicContext.OnValueChanged != null)
+                    if (context is EditTemplateContext data && data.Model is IDynamicObject d)
                     {
-                        var parameters = col.ComponentParameters?.ToList() ?? new List<KeyValuePair<string, object>>();
-                        parameters.Add(new(nameof(ValidateBase<string>.OnValueChanged), onValueChanged.Invoke(d, col, (model, column, val) => DynamicContext.OnValueChanged(model, column, val))));
-                        col.ComponentParameters = parameters;
+                        var onValueChanged = Utility.CreateOnValueChanged<IDynamicObject>(col.PropertyType).Compile();
+                        if (DynamicContext.OnValueChanged != null)
+                        {
+                            var parameters = col.ComponentParameters?.ToList() ?? new List<KeyValuePair<string, object>>();
+                            parameters.Add(new(nameof(ValidateBase<string>.OnValueChanged), onValueChanged.Invoke(d, col, (model, column, val) => DynamicContext.OnValueChanged(model, column, val))));
+                            col.ComponentParameters = parameters;
+                        }
+                        builder.CreateComponentByFieldType(this, col, data.Model, false, changedType);
                     }
-                    builder.CreateComponentByFieldType(this, col, row, false, changedType);
                 };
             }
 

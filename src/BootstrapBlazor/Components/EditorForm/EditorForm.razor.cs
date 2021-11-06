@@ -260,6 +260,8 @@ namespace BootstrapBlazor.Components
 
         private RenderFragment<object>? GetRenderTemplate(IEditorItem item) => IsSearch.Value && item is ITableColumn col
             ? col.SearchTemplate
-            : item.EditTemplate;
+            : (item.EditTemplate == null
+                ? null
+                : new RenderFragment<object>(model => builder => builder.AddContent(0, item.EditTemplate(new EditTemplateContext(model, ItemChangedType)))));
     }
 }
