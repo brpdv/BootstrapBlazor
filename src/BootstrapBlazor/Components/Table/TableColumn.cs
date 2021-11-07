@@ -215,7 +215,7 @@ namespace BootstrapBlazor.Components
         /// 获得/设置 编辑模板
         /// </summary>
         [Parameter]
-        public RenderFragment<EditTemplateContext>? EditTemplate { get; set; }
+        public RenderFragment<object>? EditTemplate { get; set; }
 
         /// <summary>
         /// 获得/设置 搜索模板

@@ -262,6 +262,6 @@ namespace BootstrapBlazor.Components
             ? col.SearchTemplate
             : (item.EditTemplate == null
                 ? null
-                : new RenderFragment<object>(model => builder => builder.AddContent(0, item.EditTemplate(new EditTemplateContext(model, ItemChangedType)))));
+                : new RenderFragment<object>(model => builder => builder.AddContent(0, item.EditTemplate(new EditTemplateContext<TModel>(Model, ItemChangedType)))));
     }
 }

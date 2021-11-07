@@ -83,7 +83,7 @@ namespace BootstrapBlazor.Components
         public object? Step { get; set; }
 
         /// <summary>
-        /// 获得/设置 Textarea行数
+        /// 获得/设置 Textarea 行数
         /// </summary>
         [Parameter]
         public int Rows { get; set; }
@@ -92,7 +92,7 @@ namespace BootstrapBlazor.Components
         /// 获得/设置 编辑模板
         /// </summary>
         [Parameter]
-        public RenderFragment<EditTemplateContext>? EditTemplate { get; set; }
+        public RenderFragment<object>? EditTemplate { get; set; }
 
         /// <summary>
         /// 获得/设置 组件类型 默认为 null

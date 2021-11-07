@@ -7,14 +7,12 @@ namespace BootstrapBlazor.Components
     /// <summary>
     /// 
     /// </summary>
-    public class EditTemplateContext
+    public class EditTemplateContext<TModel>
     {
         /// <summary>
         /// 构造方法
         /// </summary>
-        /// <param name="model"></param>
-        /// <param name="changedType"></param>
-        public EditTemplateContext(object model, ItemChangedType changedType)
+        public EditTemplateContext(TModel model, ItemChangedType changedType)
         {
             Model = model;
             ChangedType = changedType;
@@ -23,7 +21,7 @@ namespace BootstrapBlazor.Components
         /// <summary>
         /// 获得/设置 行数据实例
         /// </summary>
-        public object Model { get; set; }
+        public TModel Model { get; set; }
 
         /// <summary>
         /// 获得/设置 改变类型

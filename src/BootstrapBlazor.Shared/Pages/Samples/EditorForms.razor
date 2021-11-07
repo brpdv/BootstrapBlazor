@@ -23,7 +23,7 @@
                 <EditorItem @bind-Field="@context.Hobby">
                     <EditTemplate Context="value">
                         <div class="col-12">
-                            <CheckboxList @bind-Value="@context.Hobby" Items="@Hobbys" />
+                            <CheckboxList @bind-Value="@((((EditTemplateContext<Foo>)value).Model).Hobby)" Items="@Hobbys" />
                         </div>
                     </EditTemplate>
                 </EditorItem>
@@ -46,7 +46,7 @@
                     <EditorItem @bind-Field="@context.Hobby">
                         <EditTemplate Context="value">
                             <div class="col-12">
-                                <CheckboxList @bind-Value="@context.Hobby" Items="@Hobbys" />
+                                <CheckboxList @bind-Value="@((((EditTemplateContext<Foo>)value).Model).Hobby)" Items="@Hobbys" />
                             </div>
                         </EditTemplate>
                     </EditorItem>
@@ -82,10 +82,10 @@
                     <EditorItem @bind-Field="@context.Count">
                         <EditTemplate Context="value">
                             <div class="col-12 col-sm-6">
-                                <Select SkipValidate="true" @bind-Value="@(((Foo)value.Model).Count)" Items="@DummyItems" ShowSearch="true" />
+                                <Select SkipValidate="true" @bind-Value="@((((EditTemplateContext<Foo>)value).Model).Count)" Items="@DummyItems" ShowSearch="true" />
                             </div>
                             <div class="col-12 col-sm-6">
-                                <BootstrapInput Value="@(((Foo)value.Model).Count)" readonly="true" />
+                                <BootstrapInput Value="@((((EditTemplateContext<Foo>)value).Model).Count)" readonly="true" />
                             </div>
                         </EditTemplate>
                     </EditorItem>

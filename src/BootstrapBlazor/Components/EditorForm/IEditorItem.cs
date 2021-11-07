@@ -72,7 +72,7 @@ namespace BootstrapBlazor.Components
         /// <summary>
         /// 获得/设置 编辑模板
         /// </summary>
-        RenderFragment<EditTemplateContext>? EditTemplate { get; set; }
+        RenderFragment<object>? EditTemplate { get; set; }
 
         /// <summary>
         /// 获得/设置 组件类型 默认为 null

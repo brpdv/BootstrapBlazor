@@ -968,7 +968,7 @@ namespace BootstrapBlazor.Components
         private RenderFragment RenderCell(ITableColumn col, TItem item, ItemChangedType changedType) => col.IsEditable(changedType)
             ? (col.EditTemplate == null
                 ? builder => builder.CreateComponentByFieldType(this, col, item, false, changedType)
-                : col.EditTemplate(new EditTemplateContext(item, changedType)))
+                : col.EditTemplate(new EditTemplateContext<TItem>(EditModel, changedType)))
             : (col.Template == null
                 ? builder => builder.CreateDisplayByFieldType(this, col, item, false)
                 : col.Template(item));
@@ -995,7 +995,7 @@ namespace BootstrapBlazor.Components
             {
                 col.EditTemplate = context => builder =>
                 {
-                    if (context is EditTemplateContext data && data.Model is IDynamicObject d)
+                    if (context is EditTemplateContext<TItem> data && data.Model is IDynamicObject d)
                     {
                         var onValueChanged = Utility.CreateOnValueChanged<IDynamicObject>(col.PropertyType).Compile();
                         if (DynamicContext.OnValueChanged != null)
