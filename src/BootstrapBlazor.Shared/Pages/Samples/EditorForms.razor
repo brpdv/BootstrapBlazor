@@ -23,7 +23,7 @@
                 <EditorItem @bind-Field="@context.Hobby">
                     <EditTemplate Context="value">
                         <div class="col-12">
-                            <CheckboxList @bind-Value="@((((EditTemplateContext<Foo>)value).Model).Hobby)" Items="@Hobbys" />
+                            <CheckboxList @bind-Value="@(((EditTemplateContext<Foo>)value).Model.Hobby)" Items="@Hobbys" />
                         </div>
                     </EditTemplate>
                 </EditorItem>
