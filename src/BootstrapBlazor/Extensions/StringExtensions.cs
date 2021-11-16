@@ -96,5 +96,17 @@ namespace BootstrapBlazor.Components.Extensions
             while (sourceSpan.Length > 0);
             return ret;
         }
+
+        /// <summary>
+        /// Replace 扩展方法
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        public static ReadOnlyMemory<char> Replace(this ReadOnlyMemory<char> source, ReadOnlyMemory<char> oldValue, ReadOnlyMemory<char> newValue)
+        {
+            return source;
+        }
     }
 }
