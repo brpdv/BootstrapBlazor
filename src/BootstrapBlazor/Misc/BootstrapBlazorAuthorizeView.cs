@@ -105,6 +105,7 @@ namespace BootstrapBlazor.Components
                     // Since this component does accept some parameters from query, we must supply values for all of them,
                     // even if the querystring in the URI is empty. So don't skip the following logic.
                     var url = NavigationManager.Uri;
+                    QueryHelpers.ParseQuery(NavigationManager.ToAbsoluteUri(url).Query);
                     var queryStartPos = url.IndexOf('?');
                     var query = queryStartPos < 0 ? default : url.AsMemory(queryStartPos);
                     queryParameterSupplier.RenderParametersFromQueryString(builder, query);
