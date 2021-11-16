@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 // Website: https://www.blazor.zone or https://argozhang.github.io/
 
+using BootstrapBlazor.Components.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,14 +39,21 @@ namespace UnitTest.Performance
         public void ReplaceString()
         {
             var sw = Stopwatch.StartNew();
-
             for (var index = 0; index < Count; index++)
             {
                 Loop(Payload);
             }
-
             sw.Stop();
-            Logger.WriteLine(sw.Elapsed.ToString());
+            Logger.WriteLine($"String: {sw.Elapsed}");
+
+            var segment = Payload.AsMemory();
+            sw.Restart();
+            for (var index = 0; index < Count; index++)
+            {
+                LoopSpan(segment);
+            }
+            sw.Stop();
+            Logger.WriteLine($"Span: {sw.Elapsed}");
 
             void Loop(string payload)
             {
@@ -58,6 +66,19 @@ namespace UnitTest.Performance
                 payload = payload.Replace("@@", "@");
                 payload = payload.Replace("&lt;", "<");
                 payload = payload.Replace("&gt;", ">");
+            }
+
+            void LoopSpan(ReadOnlyMemory<char> payload)
+            {
+                Localizers.ForEach(kv =>
+                {
+                    payload = payload.Replace($"@(((MarkupString)Localizer[\"{kv.Key}\"].Value).ToString())".AsSpan(), kv.Value);
+                    payload = payload.Replace($"@((MarkupString)Localizer[\"{kv.Key}\"].Value)".AsSpan(), kv.Value);
+                    payload = payload.Replace($"@Localizer[\"{kv.Key}\"]".AsSpan(), kv.Value);
+                });
+                payload = payload.Replace("@@".AsSpan(), "@");
+                payload = payload.Replace("&lt;".AsSpan(), "<");
+                payload = payload.Replace("&gt;".AsSpan(), ">");
             }
         }
     }

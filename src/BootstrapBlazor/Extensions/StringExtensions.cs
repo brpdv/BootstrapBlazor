@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace BootstrapBlazor.Components.Extensions
 {
@@ -104,9 +105,25 @@ namespace BootstrapBlazor.Components.Extensions
         /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public static ReadOnlyMemory<char> Replace(this ReadOnlyMemory<char> source, ReadOnlyMemory<char> oldValue, ReadOnlyMemory<char> newValue)
+        public static ReadOnlyMemory<char> Replace(this ReadOnlyMemory<char> source, ReadOnlySpan<char> oldValue, string newValue)
         {
-            return source;
+            var sb = new StringBuilder(100 * 1024);
+            while (!source.IsEmpty)
+            {
+                var index = source.Span.IndexOf(oldValue);
+                if (index > -1)
+                {
+                    sb.Append(source[0..index]);
+                    sb.Append(newValue.AsSpan());
+                    source = source[(index + oldValue.Length)..];
+                }
+                else
+                {
+                    sb.Append(source);
+                    break;
+                }
+            }
+            return sb.ToString().AsMemory();
         }
     }
 }
